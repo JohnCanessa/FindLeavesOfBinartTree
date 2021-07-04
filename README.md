@@ -1,4 +1,4 @@
-# FindLeavesOfBinartTree
+# FindLeavesOfBinaryTree
 LeetCode 366. Find Leaves of Binary Tree
 https://leetcode.com/explore/featured/card/july-leetcoding-challenge-2021/608/week-1-july-1st-july-7th/3798/
 https://leetcode.com/problems/find-leaves-of-binary-tree/
