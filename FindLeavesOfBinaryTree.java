@@ -20,7 +20,6 @@ public class FindLeavesOfBinaryTree {
         // **** base case ****
         if (root == null) return -1;
 
-
         // **** recursion - compute reverse depth ****
         int depth = Math.max(dfs(root.left, al), dfs(root.right, al)) + 1;
 
@@ -36,7 +35,6 @@ public class FindLeavesOfBinaryTree {
         // ???? ????
         // System.out.println("dfs <<< val: " + root.val + " depth: " + depth);
 
-        
         // **** create new array list (if needed) ****
         if (al.size() <= depth)
             al.add(new ArrayList<>());
@@ -58,8 +56,11 @@ public class FindLeavesOfBinaryTree {
      * o Collect all the leaf nodes.
      * o Remove all the leaf nodes.
      * o Repeat until the tree is empty.
+     * 
+     * Runtime: 1 ms, faster than 24.56% of Java online submissions.
+	 * Memory Usage: 39.4 MB, less than 5.69% of Java online submissions.
      */
-    static List<List<Integer>> findLeaves(TreeNode root) {
+    static List<List<Integer>> findLeaves0(TreeNode root) {
         
         // **** initialization ****
         List<List<Integer>> lol = new ArrayList<>();
@@ -72,6 +73,74 @@ public class FindLeavesOfBinaryTree {
 
         // **** return list of lists ****
         return lol;
+    }
+
+
+    /**
+     * Given the root of a binary tree, collect a tree's nodes as if you were doing this:
+     * 
+     * o Collect all the leaf nodes.
+     * o Remove all the leaf nodes.
+     * o Repeat until the tree is empty.
+     * 
+     * Runtime: O(n)  Space: O(n)
+     * 
+     * Runtime: 0 ms, faster than 100.00% of Java online submissions.
+     * Memory Usage: 37.3 MB, less than 79.87% of Java online submissions.
+     */
+    static List<List<Integer>> findLeaves(TreeNode root) {
+
+        // **** initialization ****
+        List<List<Integer>> lol = new ArrayList<>();
+
+        // **** loop until we have no more nodes to process ****
+        while (root != null) {
+
+            // **** new list of leaves ****
+            List<Integer> leaves = new ArrayList<>();
+
+            // **** find leaf nodes on this pass ****
+            root = findLeaves(root, leaves);
+
+            // ???? ????
+            // System.out.println("findLeaves <<< leaves: " + leaves.toString());
+
+            // **** add list of leaf nodes to the list ****
+            lol.add(leaves);
+        }
+
+        // **** return list of lists ****
+        return lol;
+    }
+
+
+    /**
+     * Recursive call.
+     */
+    static TreeNode findLeaves(TreeNode root, List<Integer> leaves) {
+
+        // **** base condition(s) ****
+        if (root == null) return root;
+
+        // ???? ????
+        // System.out.println("findLeaves <<< val: " + root.val);
+
+        // **** found leaf node ****
+        if (root.left == null && root.right == null) {
+
+            // **** add it to list ****
+            leaves.add(root.val);
+
+            // **** ****
+            return null;
+        }
+
+        // **** recursion on left and right sub-trees ****
+        root.left = findLeaves(root.left, leaves);
+        root.right = findLeaves(root.right, leaves);
+
+        // **** return root ****
+        return root;
     }
 
 
@@ -137,6 +206,9 @@ public class FindLeavesOfBinaryTree {
         // ???? ????
         System.out.print("main <<< bst.levelOrderTraversal: ");
         System.out.println(bst.levelOrderTraversal(bst.root).toString());
+
+        // **** compute and display result ****
+        // System.out.println("main <<< findLeaves0: " + findLeaves0(bst.root));
 
         // **** compute and display result ****
         System.out.println("main <<< findLeaves: " + findLeaves(bst.root));
